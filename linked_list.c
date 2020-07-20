@@ -2,9 +2,25 @@
 #include <stdlib.h>
 
 /*
+ * A NOTE ON STRUCTS:
+ * A more convenient albeit controversial way to declare a structure is
+ * 	typedef struct Node {
+ * 		int data;
+ * 		struct Node *next;
+ * 	} Node;
+ * That way when you can write
+ * 	Node *n1;
+ * instead of
+ * 	struct node *n1;
+ * and generally write less code. However, that style is not encouraged by everyone.
+ * One of such people is Linus Torvalds, which has a kernel style guide that goes
+ * into it further: https://www.kernel.org/doc/html/v4.10/process/coding-style.html
+ * Personally I think the typedef variant is fine as long as the project is small.
+ */
+
+/*
  * A node of a linked list containing an integer as data and a pointer to the next node.
  * Would be nice to store data of arbitrary type as data.
- *
  */
 struct node {
 	int data;
@@ -13,7 +29,6 @@ struct node {
 
 /*
  * Linked list containing head node pointer. Clunky, don't know if it's the right way to initialize a linked list.
- *
  */
 struct list {
 	struct node *head;
@@ -21,7 +36,6 @@ struct list {
 
 /*
  * Print the 'data' field of every node of a linked list.
- *
  */
 void print_data(struct list *l)
 {
@@ -37,7 +51,6 @@ void print_data(struct list *l)
 
 /*
  * Add a node at the end of a linked list.
- *
  */
 void add_node(struct list *l, struct node *n)
 {
@@ -54,7 +67,6 @@ void add_node(struct list *l, struct node *n)
 
 /*
  * Create a new linked list node and return it as value. Need to find out how to use malloc() and the whole memory management stuff to return a pointer.
- *
  */
 struct node create_node(int data) {
 	struct node new_node = { data, NULL };
@@ -64,7 +76,6 @@ struct node create_node(int data) {
 
 /*
  * Create a linked list with 'head' as head pointer.
- *
  */
 struct list create_list(struct node *head)
 {
@@ -75,7 +86,6 @@ struct list create_list(struct node *head)
 
 /*
  * Insert a node after a node containing 'd' in its 'data' field.
- *
  */
 int insert_after(struct list *l, int d, struct node *n)
 {
