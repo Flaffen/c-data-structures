@@ -63,6 +63,28 @@ int insert_after(struct list *l, int d, struct node *n)
 	}
 }
 
+int delete(struct list *l, int d)
+{
+	struct node *current = l->head;
+	struct node *prev = NULL;
+
+	while (current->data != d && current->next != NULL) {
+		prev = current;
+		current = current->next;
+	}
+
+	if (current->data != d) {
+		return 1;
+	} else {
+		if (prev == NULL) {
+			l->head = current->next;
+		} else {
+			prev->next = current->next;
+		}
+		return 0;
+	}
+}
+
 int main(void)
 {
 	struct node n0 = create_node(0);
@@ -84,6 +106,8 @@ int main(void)
 
 	struct node n4 = create_node(9000);
 	insert_after(pll, 20, &n4);
+
+	delete(pll, 20);
 
 	print_data(pll);
 
