@@ -1,38 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-/*
- * A NOTE ON STRUCTS:
- * A more convenient albeit controversial way to declare a structure is
- * 	typedef struct Node {
- * 		int data;
- * 		struct Node *next;
- * 	} Node;
- * That way when you can write
- * 	Node *n1;
- * instead of
- * 	struct node *n1;
- * and generally write less code. However, that style is not encouraged by everyone.
- * One of such people is Linus Torvalds, which has a kernel style guide that goes
- * into it further: https://www.kernel.org/doc/html/v4.10/process/coding-style.html
- * Personally I think the typedef variant is fine as long as the project is small.
- */
-
-/*
- * A node of a linked list containing an integer as data and a pointer to the next node.
- * Would be nice to store data of arbitrary type as data.
- */
-struct node {
-	int data;
-	struct node *next;
-};
-
-/*
- * Linked list containing head node pointer. Clunky, don't know if it's the right way to initialize a linked list.
- */
-struct list {
-	struct node *head;
-};
+#include "linked_list.h"
 
 /*
  * Print the 'data' field of every node of a linked list.
@@ -63,25 +31,6 @@ void add_node(struct list *l, struct node *n)
 
 		current->next = n;
 	}
-}
-
-/*
- * Create a new linked list node and return it as value. Need to find out how to use malloc() and the whole memory management stuff to return a pointer.
- */
-struct node create_node(int data) {
-	struct node new_node = { data, NULL };
-
-	return new_node;
-}
-
-/*
- * Create a linked list with 'head' as head pointer.
- */
-struct list create_list(struct node *head)
-{
-	struct list new_list = { head };
-
-	return new_list;
 }
 
 /*
@@ -128,7 +77,7 @@ int delete(struct list *l, int d)
 	}
 }
 
-struct node *create_node_malloc(int d)
+struct node *create_node(int d)
 {
 	struct node *p;
 	p = malloc(sizeof *p);
@@ -137,7 +86,7 @@ struct node *create_node_malloc(int d)
 	return p;
 }
 
-struct list *create_list_malloc(struct node *head)
+struct list *create_list(struct node *head)
 {
 	struct list *l;
 	l = malloc(sizeof *l);
@@ -150,28 +99,4 @@ struct list *create_list_malloc(struct node *head)
 void print_node_data(struct node *node)
 {
 	printf("%d\n", (*(node)).data);
-}
-
-int main(void)
-{
-	struct list *llist = create_list_malloc(NULL);
-
-	// Allocate memory for 10 node structs and fill out the linked list with them.
-	for (int i = 0; i < 10; i++) {
-		add_node(llist, create_node_malloc(i + 1));
-	}
-
-	// Do things with the linked list.
-	print_data(llist);
-
-	// Deallocate memory for the linked list.
-	struct node *current = llist->head;
-
-	while (current != NULL) {
-		delete(llist, current->data);
-		current = current->next;
-	}
-	free(llist);
-
-	return 0;
 }
