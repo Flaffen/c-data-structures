@@ -37,6 +37,8 @@ void add_node(struct list *list, struct node *node);
 
 struct node *create_node(int data);
 
+struct node *get_node(struct list *llist, int data);
+
 struct list *create_list(struct node *head);
 
 void print_node_data(struct node *node);

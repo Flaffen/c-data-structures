@@ -16,6 +16,10 @@ int main(void)
 	}
 
 	print_data(llist);
+	int findx;
+	scanf("%d", &findx);
+	struct node *found = get_node(llist, findx);
+	printf("%s\n", found ? "found" : "not found");
 
 	// Deallocate memory for the linked list.
 	free_linked_list(llist);

@@ -86,6 +86,17 @@ struct node *create_node(int d)
 	return p;
 }
 
+struct node *get_node(struct list *llist, int data)
+{
+	struct node *current = llist->head;
+
+	while (current->data != data && current->next != NULL) {
+		current = current->next;
+	}
+
+	return current->data == data ? current : NULL;
+}
+
 struct list *create_list(struct node *head)
 {
 	struct list *l;
@@ -114,4 +125,6 @@ int free_linked_list(struct list *llist)
 		}
 	}
 	free(llist);
+
+	return 1;
 }
