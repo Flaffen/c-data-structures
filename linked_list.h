@@ -46,3 +46,5 @@ void print_node_data(struct node *node);
 int delete(struct list *list, int data);
 
 int free_linked_list(struct list *list);
+
+int insert_after(struct list *list, int data, struct node *node);

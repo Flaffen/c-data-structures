@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include "linked_list.h"
 
+void del_all_occ(struct list *llist, int data)
+{
+	struct node *current;
+
+	while (!delete(llist, data));
+}
+
 int main(void)
 {
 	struct list *llist = create_list(NULL);
@@ -16,10 +23,13 @@ int main(void)
 	}
 
 	print_data(llist);
+	
 	int findx;
-	scanf("%d", &findx);
-	struct node *found = get_node(llist, findx);
-	printf("%s\n", found ? "found" : "not found");
+	int replacex;
+	scanf("%d %d", &findx, &replacex);
+	insert_after(llist, findx, create_node(replacex));
+
+	print_data(llist);
 
 	// Deallocate memory for the linked list.
 	free_linked_list(llist);
