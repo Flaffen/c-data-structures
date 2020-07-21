@@ -98,5 +98,20 @@ struct list *create_list(struct node *head)
 
 void print_node_data(struct node *node)
 {
-	printf("%d\n", (*(node)).data);
+	printf("%d\n", node->data);
+}
+
+int free_linked_list(struct list *llist)
+{
+	struct node *current = llist->head;
+
+	if (current->next == NULL) {
+		free(current);
+	} else {
+		while (current != NULL) {
+			delete(llist, current->data);
+			current = current->next;
+		}
+	}
+	free(llist);
 }
