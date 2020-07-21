@@ -1,37 +1,53 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "linked_list.h"
 
-void del_all_occ(struct list *llist, int data)
+int main(int argc, char *argv[])
 {
-	struct node *current;
+	struct list *llist = create_list(create_node(9000));
+	int left, right;
+	char line[128];
+	FILE *f1 = argc > 1 ? fopen(argv[1], "r") : stdin;
+	FILE *f2 = argc > 1 ? fopen(argv[2], "r") : stdin;
 
-	while (!delete(llist, data));
-}
+	printf("Enter a range (x-y): ");
+	fgets(line, 128, f1);
+	sscanf(line, "%d-%d", &left, &right);
+	printf("\nCreating a linked list for you...\n");
 
-int main(void)
-{
-	struct list *llist = create_list(NULL);
-
-	int n;
-	scanf("%d", &n);
-	for (int i = 0; i < n; i++) {
-		int x;
-		scanf("%d", &x);
-		struct node *n = create_node(x);
-		add_node(llist, n);
+	for (int i = left; i < (right + 1); i++) {
+		add_node(llist, create_node(i));
 	}
 
+	printf("Your linked list is here.\n\n");
 	print_data(llist);
-	
-	int findx;
-	int replacex;
-	scanf("%d %d", &findx, &replacex);
-	insert_after(llist, findx, create_node(replacex));
+	printf("\n");
 
-	print_data(llist);
+	while (1) {
+		int x, y;
+		char command[128];
+		fgets(command, 128, f2);
 
-	// Deallocate memory for the linked list.
+		if (strstr(command, "insert")) {
+			sscanf(command, "insert %d after %d", &x, &y);
+			insert_after(llist, y, create_node(x));
+		} else if (strstr(command, "delete")) {
+			int del_d;
+
+			sscanf(command, "delete %d", &del_d);
+			delete(llist, del_d);
+		} else if (strstr(command, "quit")) {
+			break;
+		}
+
+		printf("\n");
+		print_data(llist);
+		printf("\n");
+	}
+
+	fclose(f1);
+	fclose(f2);
 	free_linked_list(llist);
 
 	return 0;
