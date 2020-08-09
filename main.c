@@ -13,12 +13,9 @@ int main(int argc, char *argv[])
 		llist_append(&llist, llist_create_node(i * 10));
 	}
 
-	llist_delete(&llist, 30);
-	llist_insert_after(llist, 10, llist_create_node(1));
-
-	llist_print_node_data(llist_get_node(llist, 40));
-
 	llist_print(llist);
+
+	llist_free(&llist);
 
 	return 0;
 }

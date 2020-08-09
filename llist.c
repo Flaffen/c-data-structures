@@ -111,17 +111,19 @@ void llist_print_node_data(struct node *node)
 int llist_free(struct node **llist)
 {
 	if (*llist == NULL) {
-		free(llist);
+		return 1;
 	} else {
-		struct node *n;
+		struct node *current = *llist;
+		struct node *tmp = NULL;
 
-		do {
-			n = *llist;
-			struct node *next = n->next;
+		while (current != NULL) {
+			tmp = current->next;
+			printf("Freeing node with d == %d\n", current->data);
+			free(current);
+			current = tmp;
+		}
 
-			free(n);
-			n = next;
-		} while (n->next != NULL);
+		return 0;
 	}
 
 	return 1;
