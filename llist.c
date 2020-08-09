@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "linked_list.h"
+#include "llist.h"
 
 /*
  * Print the 'data' field of every node of a linked list.
  */
-void print_data(struct list *l)
+void print_data(struct node *head)
 {
-	struct node *current = l->head;
+	struct node *current = head;
 
 	if (current == NULL) return;
 
@@ -18,28 +18,12 @@ void print_data(struct list *l)
 }
 
 /*
- * Add a node at the end of a linked list.
- */
-void add_node(struct list *l, struct node *n)
-{
-	if (l->head == NULL) {
-		l->head = n;
-	} else {
-		struct node *current = l->head;
-
-		while (current->next != NULL) current = current->next;
-
-		current->next = n;
-	}
-}
-
-/*
  * Insert a node after a node containing 'd' in its 'data' field.
  */
-int insert_after(struct list *l, int d, struct node *n)
+int insert_after(struct node *l, int d, struct node *n)
 {
-	struct node *current = l->head;
-	
+	struct node *current = l;
+
 	while (current->data != d && current->next != NULL) {
 		current = current->next;
 	}
@@ -54,9 +38,9 @@ int insert_after(struct list *l, int d, struct node *n)
 	}
 }
 
-int delete(struct list *l, int d)
+int delete(struct node *l, int d)
 {
-	struct node *current = l->head;
+	struct node *current = l;
 	struct node *prev = NULL;
 
 	while (current->data != d && current->next != NULL) {
@@ -68,7 +52,7 @@ int delete(struct list *l, int d)
 		return 1;
 	} else {
 		if (prev == NULL) {
-			l->head = current->next;
+			l = current->next;
 		} else {
 			prev->next = current->next;
 		}
@@ -86,9 +70,9 @@ struct node *create_node(int d)
 	return p;
 }
 
-struct node *get_node(struct list *llist, int data)
+struct node *get_node(struct node *llist, int data)
 {
-	struct node *current = llist->head;
+	struct node *current = llist;
 
 	while (current->data != data && current->next != NULL) {
 		current = current->next;
@@ -97,14 +81,19 @@ struct node *get_node(struct list *llist, int data)
 	return current->data == data ? current : NULL;
 }
 
-struct list *create_list(struct node *head)
+int append(struct node **head, struct node *n)
 {
-	struct list *l;
-	l = malloc(sizeof *l);
+	if (*head == NULL) {
+		*head = n;
+	} else {
+		struct node *val = *head;
 
-	l->head = head;
+		while (val != NULL)
+			val = val->next;
+		val->next = n;
+	}
 
-	return l;
+	return 0;
 }
 
 void print_node_data(struct node *node)
@@ -112,19 +101,21 @@ void print_node_data(struct node *node)
 	printf("%d\n", node->data);
 }
 
-int free_linked_list(struct list *llist)
+int free_linked_list(struct node **llist)
 {
-	struct node *current = llist->head;
-
-	if (current->next == NULL) {
-		free(current);
+	if (*llist == NULL) {
+		free(llist);
 	} else {
-		while (current != NULL) {
-			delete(llist, current->data);
-			current = current->next;
-		}
+		struct node *n;
+
+		do {
+			n = *llist;
+			struct node *next = n->next;
+
+			free(n);
+			n = next;
+		} while (n->next != NULL);
 	}
-	free(llist);
 
 	return 1;
 }

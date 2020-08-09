@@ -24,27 +24,18 @@ struct node {
 	struct node *next;
 };
 
-/*
- * Linked list containing head node pointer. Clunky, don't know if it's the right way to initialize a linked list.
- */
-struct list {
-	struct node *head;
-};
-
-void print_data(struct list *linked_list);
-
-void add_node(struct list *list, struct node *node);
+void print_data(struct node *head);
 
 struct node *create_node(int data);
 
-struct node *get_node(struct list *llist, int data);
-
-struct list *create_list(struct node *head);
+struct node *get_node(struct node *llist, int data);
 
 void print_node_data(struct node *node);
 
-int delete(struct list *list, int data);
+int delete(struct node *list, int data);
 
-int free_linked_list(struct list *list);
+int free_linked_list(struct node **list);
 
-int insert_after(struct list *list, int data, struct node *node);
+int insert_after(struct node *list, int data, struct node *node);
+
+int append(struct node **list, struct node *n);
