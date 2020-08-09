@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
 		llist_append(&llist, llist_create_node(i * 10));
 	}
 
+	llist_insert_first(&llist, llist_create_node(999));
+
 	llist_print(llist);
 
 	llist_free(&llist);

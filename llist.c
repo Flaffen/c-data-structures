@@ -103,6 +103,14 @@ int llist_append(struct node **head, struct node *n)
 	return 0;
 }
 
+int llist_insert_first(struct node **head, struct node *n)
+{
+	n->next = *head;
+	*head = n;
+
+	return 0;
+}
+
 void llist_print_node_data(struct node *node)
 {
 	printf("%d\n", node->data);

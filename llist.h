@@ -38,4 +38,6 @@ int llist_free(struct node **list);
 
 int llist_insert_after(struct node *list, int data, struct node *node);
 
+int llist_insert_first(struct node **llist, struct node *node);
+
 int llist_append(struct node **list, struct node *n);
