@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
 	llist_delete_last(&llist);
 	llist_delete_last(&llist);
 
+	llist_insert_before(llist, 30, llist_create_node(567));
+
 	llist_print(llist);
 
 	llist_free(&llist);

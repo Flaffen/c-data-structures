@@ -38,6 +38,33 @@ int llist_insert_after(struct node *l, int d, struct node *n)
 	}
 }
 
+int llist_insert_before(struct node *llist, int d, struct node *n)
+{
+	if (llist == NULL)
+		return 1;
+	
+	struct node *current = llist;
+	struct node *prev = NULL;
+
+	while (current->data != d && current->next != NULL) {
+		prev = current;
+		current = current->next;
+	}
+
+	if (current->data != d) {
+		return 1;
+	} else {
+		if (prev == NULL) {
+			printf("coming soon\n");
+		} else {
+			n->next = current;
+			prev->next = n;
+		}
+
+		return 0;
+	}
+}
+
 int llist_delete(struct node **headp, int d)
 {
 	if (*headp == NULL) {
