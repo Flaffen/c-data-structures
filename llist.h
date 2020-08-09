@@ -24,18 +24,18 @@ struct node {
 	struct node *next;
 };
 
-void print_data(struct node *head);
+void llist_print(struct node *head);
 
-struct node *create_node(int data);
+struct node *llist_create_node(int data);
 
-struct node *get_node(struct node *llist, int data);
+struct node *llist_get_node(struct node *llist, int data);
 
-void print_node_data(struct node *node);
+void llist_print_node_data(struct node *node);
 
-int delete(struct node *list, int data);
+int llist_delete(struct node **list, int data);
 
-int free_linked_list(struct node **list);
+int llist_free(struct node **list);
 
-int insert_after(struct node *list, int data, struct node *node);
+int llist_insert_after(struct node *list, int data, struct node *node);
 
-int append(struct node **list, struct node *n);
+int llist_append(struct node **list, struct node *n);

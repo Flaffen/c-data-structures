@@ -5,7 +5,7 @@
 /*
  * Print the 'data' field of every node of a linked list.
  */
-void print_data(struct node *head)
+void llist_print(struct node *head)
 {
 	struct node *current = head;
 
@@ -20,7 +20,7 @@ void print_data(struct node *head)
 /*
  * Insert a node after a node containing 'd' in its 'data' field.
  */
-int insert_after(struct node *l, int d, struct node *n)
+int llist_insert_after(struct node *l, int d, struct node *n)
 {
 	struct node *current = l;
 
@@ -38,9 +38,14 @@ int insert_after(struct node *l, int d, struct node *n)
 	}
 }
 
-int delete(struct node *l, int d)
+int llist_delete(struct node **headp, int d)
 {
-	struct node *current = l;
+	if (*headp == NULL) {
+		printf("the first element in the linked list is null!");
+		return 1;
+	}
+
+	struct node *current = *headp;
 	struct node *prev = NULL;
 
 	while (current->data != d && current->next != NULL) {
@@ -48,20 +53,22 @@ int delete(struct node *l, int d)
 		current = current->next;
 	}
 
-	if (current->data != d) {
-		return 1;
-	} else {
+	if (current->data == d) {
 		if (prev == NULL) {
-			l = current->next;
+			*headp = current->next;
+			free(current);
 		} else {
 			prev->next = current->next;
+			free(current);
 		}
-		free(current);
+
 		return 0;
+	} else {
+		return 1;
 	}
 }
 
-struct node *create_node(int d)
+struct node *llist_create_node(int d)
 {
 	struct node *p;
 	p = malloc(sizeof *p);
@@ -70,7 +77,7 @@ struct node *create_node(int d)
 	return p;
 }
 
-struct node *get_node(struct node *llist, int data)
+struct node *llist_get_node(struct node *llist, int data)
 {
 	struct node *current = llist;
 
@@ -81,14 +88,14 @@ struct node *get_node(struct node *llist, int data)
 	return current->data == data ? current : NULL;
 }
 
-int append(struct node **head, struct node *n)
+int llist_append(struct node **head, struct node *n)
 {
 	if (*head == NULL) {
 		*head = n;
 	} else {
 		struct node *val = *head;
 
-		while (val != NULL)
+		while (val->next != NULL)
 			val = val->next;
 		val->next = n;
 	}
@@ -96,12 +103,12 @@ int append(struct node **head, struct node *n)
 	return 0;
 }
 
-void print_node_data(struct node *node)
+void llist_print_node_data(struct node *node)
 {
 	printf("%d\n", node->data);
 }
 
-int free_linked_list(struct node **llist)
+int llist_free(struct node **llist)
 {
 	if (*llist == NULL) {
 		free(llist);
