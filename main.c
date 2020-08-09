@@ -9,11 +9,19 @@ int main(int argc, char *argv[])
 {
 	struct node *llist = NULL;
 
+	llist_insert_first(&llist, llist_create_node(888));
+
 	for (int i = 1; i <= ENTRIES; i++) {
 		llist_append(&llist, llist_create_node(i * 10));
 	}
 
 	llist_insert_first(&llist, llist_create_node(999));
+
+	llist_delete_first(&llist);
+	llist_delete_first(&llist);
+
+	llist_delete_last(&llist);
+	llist_delete_last(&llist);
 
 	llist_print(llist);
 

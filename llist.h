@@ -40,4 +40,8 @@ int llist_insert_after(struct node *list, int data, struct node *node);
 
 int llist_insert_first(struct node **llist, struct node *node);
 
+int llist_delete_first(struct node **llist);
+
+int llist_delete_last(struct node **llist);
+
 int llist_append(struct node **list, struct node *n);

@@ -116,6 +116,40 @@ void llist_print_node_data(struct node *node)
 	printf("%d\n", node->data);
 }
 
+int llist_delete_first(struct node **llist)
+{
+	if (*llist == NULL)
+		return 1;
+
+	struct node *tmp = *llist;
+	*llist = (*llist)->next;
+	free(tmp);
+	return 0;
+}
+
+int llist_delete_last(struct node **llist)
+{
+	if (*llist == NULL)
+		return 1;
+
+	struct node *current = *llist;
+	struct node *prev = NULL;
+
+	while (current->next != NULL) {
+		prev = current;
+		current = current->next;
+	}
+
+	if (prev == NULL) {
+		return 1;
+	} else {
+		prev->next = NULL;
+		free(current);
+	}
+
+	return 0;
+}
+
 int llist_free(struct node **llist)
 {
 	if (*llist == NULL) {
