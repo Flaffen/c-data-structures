@@ -8,3 +8,6 @@ main.o: main.c
 
 llist.o: llist.c
 	gcc -c llist.c
+
+clean:
+	rm main.o llist.o a.out
