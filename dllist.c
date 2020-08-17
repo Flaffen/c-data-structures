@@ -4,23 +4,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "dllist.h"
 
-struct dllist_node {
-	int data;
-
-	struct dllist_node *prev;
-	struct dllist_node *next;
-};
-
-struct dllist {
-	int cur_size;
-	int max_size;
-
-	struct dllist_node *head;
-	struct dllist_node *tail;
-};
-
-struct dllist_node *allocate_node(int data)
+struct dllist_node *allocate_node(void *data)
 {
 	struct dllist_node* new_node;
 	new_node = malloc(sizeof(*new_node));
@@ -77,20 +63,3 @@ void destroy_dllist(struct dllist *list)
 		}
 	}
 }
-
-int main(int argc, char *argv[])
-{
-	struct dllist *mylist = create_dllist(3);
-	struct dllist_node *n1 = allocate_node(10);
-
-	insert_head(mylist, n1);
-	insert_head(mylist, allocate_node(20));
-	insert_head(mylist, allocate_node(30));
-	insert_head(mylist, allocate_node(40));
-	insert_head(mylist, allocate_node(50));
-
-	printf("%d %d\n", mylist->head->data, mylist->tail->data);
-
-	return 0;
-}
-
