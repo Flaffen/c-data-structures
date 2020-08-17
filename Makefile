@@ -9,7 +9,7 @@ main.o: main.c
 llist.o: llist.c
 	gcc -c llist.c
 
-dllist.o: dllist.c:
+dllist.o: dllist.c
 	gcc -c dllist.c
 
 clean:
